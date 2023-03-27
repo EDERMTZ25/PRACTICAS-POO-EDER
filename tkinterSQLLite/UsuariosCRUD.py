@@ -1,39 +1,55 @@
-from tkinter import*
+from tkinter import *
 from tkinter import ttk
-import tkinter as tk 
+import tkinter as tk
+from controlBD import *
 
-Ventana= Tk()
-Ventana.title("UsuariosCRUD")
-Ventana.geometry("500X300")
-panel=ttk.Notebook(Ventana)
-panel.pack(fill="booth", expand= "yes")
+# crear una istancia de tipo controlador
+controlador= controladorBD()
 
-pestana1= ttk.Frame(panel)
-pestana2= ttk.Frame(panel)
-pestana3= ttk.Frame(panel)
-pestana4= ttk.Frame(panel)
+#Proseder a guardar usuario 
+def ejecutarInsert():
+    controlador.gardarUsuario(varNom.get(),varCor.get(),varPas.get())
 
-#PESTAÑA 1 FORMULARIO USUARIOS
 
-titulo= Label(pestana1, text= "REGISTRO USUARIOS", fg="blue", front=("Modern", 18)).pack()
+ventana = Tk()
+ventana.geometry("500x300")
+ventana.title("CRUD Usuarios")
 
-varNom=tk.StringVar()
-lblNom= Label(pestana1, text="Nombre").pack()
-txtNom= Entry(pestana1, textvariable=varNom).pack()
+panel= ttk.Notebook(ventana)
+panel.pack(fill="both",expand="yes")
 
-varCor=tk.StringVar()
-lblCor= Label(pestana1, text="Correo").pack()
-txtCor= Entry(pestana1, textvariable=varCor).pack()
+blink1= ttk.Frame(panel)
+blink2= ttk.Frame(panel)
+blink3= ttk.Frame(panel)
+blink4= ttk.Frame(panel)
+#pestaña1: Formulario
+titulo= Label(blink1,text="Registro Usuarios",fg="blue",font=("Modern",18)).pack()
 
-varCon=tk.StringVar()
-lblCon= Label(pestana1, text="Contraseña").pack()
-txtCon= Entry(pestana1, textvariable=varCon).pack()
+varNom= tk.StringVar()
+lblNom= Label(blink1,text="nombre:").pack()
+txtNom= Entry(blink1,textvariable=varNom).pack()
 
-btnGuardar= Button(pestana1, text="GUARDAR USUARIO").pack()
+varCor= tk.StringVar()
+lblCor= Label(blink1,text="correo:").pack()
+txtCor= Entry(blink1,textvariable=varCor).pack()
 
-panel.add(pestana1, text="FORMULARIO USUARIOS")
-panel.add(pestana2, text= "BUSCAR USUARIOS")
-panel.add(pestana3, text= "CONSULTAR USUARIOS")
-panel.add(pestana4, text= "ACTUALIZAR USUARIOS")
+varPas= tk.StringVar()
+lblPas= Label(blink1,text="contraseña:").pack()
+txtPas= Entry(blink1,textvariable=varPas).pack()
 
-Ventana.mainloop()
+btnGuard= Button(blink1,text="Guardar Usuario",command=ejecutarInsert).pack()
+
+#pestaña2: Formulario
+#pestaña3: Formulario
+#pestaña4: Formulario
+
+
+
+
+
+panel.add(blink1,text="formulario de usuarios")
+panel.add(blink2,text="Agregar usuario")
+panel.add(blink3,text="Consultar usuarios")
+panel.add(blink4,text="Actualizar usuarios")
+
+ventana.mainloop()
