@@ -1,55 +1,83 @@
-from tkinter import *
+from tkinter import*
 from tkinter import ttk
 import tkinter as tk
-from controlBD import *
+from controladorBD import*
+from tkinter import messagebox
 
-# crear una istancia de tipo controlador
+#crear un objeto tipo controlador
 controlador= controladorBD()
 
-#Proseder a guardar usuario 
+#proceder a guadar el metodo guardarUsuario() del objeto controlador
 def ejecutarInsert():
-    controlador.gardarUsuario(varNom.get(),varCor.get(),varPas.get())
+    controlador.guardarUsuario(varNom.get(),varCor.get(),varCon())
+
+
+def ejecutaSelectU():
+    rsUsuario=controlador.consultarUsuario(varbus.get())
+    for usu in rsUsuario:
+        cadena=str(usu[0])+" "+ usu[1]+ " "+ usu[2]+ " "+ str(usu[3])
+        
+    if(rsUsuario):
+        print(cadena)
+    else:
+        messagebox.showinfo("Usuario no registrado en la base de datos")
+
 
 
 ventana = Tk()
-ventana.geometry("500x300")
 ventana.title("CRUD Usuarios")
+ventana.geometry("500x300")
 
 panel= ttk.Notebook(ventana)
-panel.pack(fill="both",expand="yes")
+panel.pack(fill="both", expand="yes")
 
-blink1= ttk.Frame(panel)
-blink2= ttk.Frame(panel)
-blink3= ttk.Frame(panel)
-blink4= ttk.Frame(panel)
-#pestaña1: Formulario
-titulo= Label(blink1,text="Registro Usuarios",fg="blue",font=("Modern",18)).pack()
+pestana1=ttk.Frame(panel)
+pestana2=ttk.Frame(panel)
+pestana3=ttk.Frame(panel)
+pestana4=ttk.Frame(panel)
 
+#pestaña 1
+titulo= Label(pestana1, text="Resgistrp de Usurios", fg="blue", font=("Modern",18) ).pack()
 varNom= tk.StringVar()
-lblNom= Label(blink1,text="nombre:").pack()
-txtNom= Entry(blink1,textvariable=varNom).pack()
+lblNom= Label(pestana1, text="nombre: ").pack()
+txtNom= Entry(pestana1, textvariable=varNom ).pack()
 
 varCor= tk.StringVar()
-lblCor= Label(blink1,text="correo:").pack()
-txtCor= Entry(blink1,textvariable=varCor).pack()
+lblCor= Label(pestana1, text="correo: ").pack()
+txtcor= Entry(pestana1, textvariable=varCor ).pack()
 
-varPas= tk.StringVar()
-lblPas= Label(blink1,text="contraseña:").pack()
-txtPas= Entry(blink1,textvariable=varPas).pack()
+varCon= tk.StringVar()
+lblCon= Label(pestana1, text="contraseña: ").pack()
+txtcon= Entry(pestana1, textvariable=varCon ).pack()
 
-btnGuard= Button(blink1,text="Guardar Usuario",command=ejecutarInsert).pack()
-
-#pestaña2: Formulario
-#pestaña3: Formulario
-#pestaña4: Formulario
+btnGuardar= Button(pestana1, text="Guardar Usuario").pack()
 
 
+#pestaña 2 Buscar Usuario
+titulo2= Label(pestana2, text="Buscar Usurios", fg="green", font=("Modern",18) ).pack()
+
+varbus= tk.StringVar()
+lblid= Label(pestana2, text="Identificador de usuario: ").pack()
+txtid= Entry(pestana2, textvariable=varbus ).pack()
+btnBusqueda= Button(pestana2, text="Buscar",command=ejecutaSelectU).pack()
+
+subBus= Label(pestana2,text="Registrado: ",fg="blue",font=("Modern",15)).pack()
+texBus=tk.Text(pestana2,height=5,width=52).pack()
 
 
 
-panel.add(blink1,text="formulario de usuarios")
-panel.add(blink2,text="Agregar usuario")
-panel.add(blink3,text="Consultar usuarios")
-panel.add(blink4,text="Actualizar usuarios")
+
+
+
+
+
+panel.add(pestana1, text="Formulario de Usuarios")
+panel.add(pestana2, text="Buscar Usuarios")
+panel.add(pestana3, text="Consultar Usuario")
+panel.add(pestana4, text="Actualiar Usuario")
+
+
+
+
 
 ventana.mainloop()
